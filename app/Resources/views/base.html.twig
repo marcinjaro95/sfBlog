@@ -3,11 +3,22 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="container">
+            <div class="float-right">
+                {% if app.user %}
+                    Zalogowany jako {{ app.user }} {% if is_granted('ROLE_ADMIN') %} | <a href="{{ path('admin') }}">Panel Admina</a> {% endif %} | <a href="{{ path('fos_user_security_logout')}}">Wyloguj</a>
+                {% else %}
+                    <a href="{{ path('fos_user_security_login')}}">Zaloguj</a>
+                {% endif %}
+            </div>
+            {% block body %}{% endblock %}
+        </div>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
