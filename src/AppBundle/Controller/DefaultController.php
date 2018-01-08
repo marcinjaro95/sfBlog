@@ -41,7 +41,7 @@ class DefaultController extends Controller
     {
         $form = null;
 
-        // jeśli użytknik jest zalogowany
+        // jeśli użytkownik jest zalogowany
         if($user = $this->getUser()) {
             $comment = new Comment();
             $comment->setPost($post);

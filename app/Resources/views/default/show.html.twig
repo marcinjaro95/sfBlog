@@ -1,44 +1,65 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<h1>{{post.title}}</h1>
+	<div class="container">
+		<div class="row">
 
-	<div>
-		<p>{{post.lead}}</p>
-		<p>{{post.content}}</p>
-
-		<span> Dodano: {{ post.createdAt|date('H:i d/m/Y') }}</span>
-
-		<hr>
-		<h3>Komentarze</h3>
-
-		{% if app.user %}
-
-		{{ form_start(form) }}
-
-			{{ form_widget(form) }}
-
-			<button class="btn btn-primary float-right">Dodaj komentarz</button>
-
-		{{ form_end(form) }}
-
-		{% else %}
-
-			<p>Komentarze mogą być dodawane tylko przez zalogowanych użytkowników. <a href="{{ path('fos_user_security_login') }}">Zaloguj się</a> </p>
-
-		{% endif %}
-
-		<div class="clearfix"></div>
-
-		{% for comment in post.comments %}
+			<h2>{{post.title}}</h2>
 
 			<div>
-				<p>{{ comment.content }}</p>
-				<span> Dodany: {{ post.createdAt|date('H:i d/m/Y') }} {% if comment.user %} przez {{comment.user}} {% endif %} </span>
-			</div>
+				<p>{{post.lead}}</p>
+				<p>{{post.content}}</p>
 
+				<span>
+					Dodano:
+					{{ post.createdAt|date('H:i d/m/Y') }}</span>
+				<div class="row">
+					<div class="col-12">
+						<h3 class="comments">Komentarze</h3>
+					</div>
+					<div class="offset-1 col-11">
+						{% if app.user %}
 
-		{% endfor %}
+							{{ form_start(form) }}
+
+							{{ form_widget(form) }}
+
+							<button class="btn btn-primary float-right">Dodaj komentarz</button>
+
+							{{ form_end(form) }}
+						</div>
+						<div class="offset-1 col-11">
+						{% else %}
+
+							<p>Komentarze mogą być dodawane tylko przez zalogowanych użytkowników.
+								<a href="{{ path('fos_user_security_login') }}">Zaloguj się</a>
+							</p>
+
+						{% endif %}
+					</div>
+					<div class="offset-1 col-11">
+						{% for comment in post.comments %}
+							<div>
+								<span class="blog-post-meta">
+									Dodany:
+									{{ post.createdAt|date('H:i d/m/Y') }}
+									{% if comment.user %}
+										przez
+										{{comment.user}}
+									{% endif %}
+								</span>
+								<p>{{ comment.content }}</p>
+							</div>
+							<hr>
+
+						{% endfor %}
+					</div>
+				</div>
 			</div>
+		</div>
+	</div>
+	<footer class="blog-footer">
+		<p class="text-center text-center">Copyright © Marcin Jarosz 2018</p>
+	</footer>
 
 {% endblock %}
